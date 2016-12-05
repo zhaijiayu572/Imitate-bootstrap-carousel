@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+}
+.container{
+    margin: 100px auto;
+    width: 400px;
+    height: 300px;
+    position: relative;
+}
+.pic{
+    background: #cccccc;
+    position: absolute;
+    left: 0;
+    top:0;
+}
+
+#carousel-text-caption{
+    font-size: 20px;
+    font-weight: 600;
+    position: absolute;
+    z-index: 99999999;;
+    left: 0;                         /* 在使用默认样式时请把left,top的值设置成0*/
+    top: 0;
+}
+#carousel-text-content{
+    font-size: 10px;
+    font-weight: 400;
+    position: absolute;
+    left: 0;
+    top:0;
+    z-index: 99999999;;
+}

@@ -1,0 +1,32 @@
+$(function () {
+    var $container = $("#carousel-container");
+    var $carouselContent = $("#carousel-content");
+    $carouselContent.width($container.width())
+        .children().width($container.width());
+    $carouselContent.height($container.height())
+        .children().height($container.height());
+    setTextPosition($container);
+});
+function setTextPosition($container) {
+    var $textCaption = $("#carousel-text-caption");
+    var $textContent = $("#carousel-text-content");
+    var iTextCaptionLeft = ($container.width()-$textCaption.width())/2;
+    var iTextCaptionTop = $container.height()/(4/3);
+    var iTextContentLeft =  ($container.width()-$textContent.width())/2;
+    var iTextContentTop = $container.height()/(6/5);
+    var oTextCaptionPosition = $textCaption.position();
+    var oTextContentPosition = $textContent.position();
+    console.log(oTextContentPosition.top);
+    if(oTextCaptionPosition.left == 0 ){
+        $textCaption.css("left",iTextCaptionLeft);
+    }
+    if(oTextCaptionPosition.top == 0 ){
+        $textCaption.css("top",iTextCaptionTop);
+    }
+    if(oTextContentPosition.left == 0){
+        $textContent.css("left",iTextContentLeft);
+    }
+    if(oTextContentPosition.top == 0 ){
+        $textContent.css('top',iTextContentTop);
+    }
+}
