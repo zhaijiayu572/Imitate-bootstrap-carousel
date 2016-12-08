@@ -6,6 +6,7 @@ $(function () {
     $carouselContent.height($container.height())
         .children().height($container.height());
     setTextPosition($container);
+    setButton($container);
 });
 function setTextPosition($container) {
     var $textCaption = $("#carousel-text-caption");
@@ -29,4 +30,10 @@ function setTextPosition($container) {
     if(oTextContentPosition.top == 0 ){
         $textContent.css('top',iTextContentTop);
     }
+}
+function setButton($container) {
+    var $leftBtn = $("#left-btn");
+    var $rightBtn = $("#right-btn");
+    $leftBtn.css({"height":$container.height(),"width":$container.width()/8,"lineHeight":$container.height()+'px'});
+    $rightBtn.css({"height":$container.height(),"width":$container.width()/8,"lineHeight":$container.height()+'px'});
 }
