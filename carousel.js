@@ -10,7 +10,10 @@ function Carousel(settings) {
         title:''             //轮播图的标题，默认没有，传入你想要添加的标题的字符串
     };
     $.extend(this.defaultSettings,settings);
-    this.container = $('<div id="carousel-container"></div>');
+    this.container = $('<div id="carousel-container"></div>').css({
+        height:this.defaultSettings.height,
+        width:this.defaultSettings.width
+    });
     this.content = $('<div class="carousel-content"></div>');
     this.navList = $('<ul class="carousel-navList"></ul>');
     for(var i=0;i<this.defaultSettings.imgSrc.length;i++){//创建出img和navList
@@ -48,6 +51,7 @@ function Carousel(settings) {
             this.content.addClass('fade');
     }
     var that = this;
+    //设置改变图片的样式为fade
     this.fade = function (idx) {
         that.content.find('img').eq(idx).fadeIn(600).siblings().hide();
         that.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
@@ -58,6 +62,7 @@ function Carousel(settings) {
 //     this.content.find('img').eq(idx).fadeIn(600).siblings().hide();
 //     this.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
 // };
+//为按钮绑定事件
 Carousel.prototype.set = function (changeFuction) {
     var idx = 0;
     var length = this.defaultSettings.imgSrc.length;
@@ -81,6 +86,7 @@ Carousel.prototype.set = function (changeFuction) {
     });
 
 };
+//创建出轮播图
 Carousel.prototype.create = function () {
     this.set(this.fade);
     this.content.appendTo(this.container);
