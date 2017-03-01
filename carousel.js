@@ -5,7 +5,7 @@ function Carousel(settings) {
         imgSrc:[],              //一个你需要放置的图片的数组，至少一个
         navListStyle:'square', //参数有 square,circle,$()
         btnStyle:'default',    //default,或者一个jQ对象数组[$left,$right];
-        changeEffect:'fade',   //fade,slide,carousel,stack
+        changeEffect:'fade',   //fade,slide,carousel,stack carousel效果图片个数应该小于8张
         container:$('body'), //默认为body，如需指定请传一个父元素jQ对象
         title:''             //轮播图的标题，默认没有，传入你想要添加的标题的字符串
     };
@@ -32,8 +32,6 @@ function Carousel(settings) {
     if(this.defaultSettings.navListStyle=='square'){
         this.navList.addClass(this.defaultSettings.navListStyle);
     }else if(this.defaultSettings.navListStyle=='circle'){
-        // this.navList.find('li').html('');
-        // this.navList = $('<div class="navList-wrapper"></div>').append(this.navList);
         this.navList.addClass(this.defaultSettings.navListStyle)
             .css('marginLeft',-this.defaultSettings.imgSrc.length*10)
             .find('li').html('');
@@ -55,6 +53,21 @@ function Carousel(settings) {
             this.content.width(this.container.width()*this.defaultSettings.imgSrc.length);
             this.content.find('img').width(this.container.width());
             break;
+        case 'carousel':  //为carousel效果设置样式
+            this.content.addClass('carousel');
+            var width = -this.container.width();
+            var height = -this.container.height();
+            var length = this.defaultSettings.imgSrc.length;
+            this.content.find('img').each(function () {
+                var index = $(this).index();
+                var angle = 360/length;
+                var distance = 0.4*(-width/2)/Math.tan((angle*Math.PI)/360); //计算出往前的距离
+                $(this).css({
+                    'marginLeft':width*0.4/2,
+                    'marginTop':height*0.4/2,
+                    'transform':'rotateY('+(angle*index)+'deg) translateZ('+(distance+10)+'px)'
+                });
+            })
     }
     var that = this;
     //设置改变图片的样式为fade
