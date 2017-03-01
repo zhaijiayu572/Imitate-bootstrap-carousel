@@ -49,11 +49,23 @@ function Carousel(settings) {
     switch (this.defaultSettings.changeEffect){
         case 'fade':
             this.content.addClass('fade');
+            break;
+        case 'slide':
+            this.content.addClass('slide');
+            this.content.width(this.container.width()*this.defaultSettings.imgSrc.length);
+            this.content.find('img').width(this.container.width());
+            break;
     }
     var that = this;
     //设置改变图片的样式为fade
     this.fade = function (idx) {
         that.content.find('img').eq(idx).fadeIn(600).siblings().hide();
+        that.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
+    };
+    this.slide = function (idx) {
+        that.content.animate({
+            left:-idx*that.container.width()
+        },1000);
         that.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
     }
 }
@@ -63,32 +75,39 @@ function Carousel(settings) {
 //     this.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
 // };
 //为按钮绑定事件
-Carousel.prototype.set = function (changeFuction) {
+Carousel.prototype.set = function (changeFunction) {
     var idx = 0;
     var length = this.defaultSettings.imgSrc.length;
     this.navList.find('li').on('click',function () {
         idx = $(this).index();
-        changeFuction(idx);
+        changeFunction(idx);
     });
     this.leftBtn.on('click',function () {
         idx--;
         if(idx<0){
             idx = length-1;
         }
-        changeFuction(idx);
+        changeFunction(idx);
     });
     this.rightBtn.on('click',function () {
         idx++;
         if(idx>length-1){
             idx = 0;
         }
-        changeFuction(idx);
+        changeFunction(idx);
     });
 
 };
 //创建出轮播图
 Carousel.prototype.create = function () {
-    this.set(this.fade);
+    switch (this.defaultSettings.changeEffect){
+        case 'fade':
+            this.set(this.fade);
+            break;
+        case 'slide':
+            this.set(this.slide);
+            break;
+    }
     this.content.appendTo(this.container);
     this.navList.appendTo(this.container);
     this.title.appendTo(this.container);

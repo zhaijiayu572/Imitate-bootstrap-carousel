@@ -10,8 +10,10 @@
     /*height: 400px;   !* 暂时的样式由js来控制 *!*/
     /*width: 800px;*/
     position: relative;
+    overflow: hidden;
 }
-#carousel-container .carousel-con   tent.fade{
+/*fade*/
+#carousel-container .carousel-content.fade{
     position: absolute;
     left: 0;
     top:0;
@@ -28,6 +30,15 @@
 }
 #carousel-container .carousel-content.fade img.selected{
     display: block;
+}
+/*slide*/
+#carousel-container .carousel-content.slide{
+    position: absolute;
+    left: 0;
+    top:0;
+}
+#carousel-container .carousel-content.slide img{
+    float: left;
 }
 /*导航列表的样式*/
 /*square*/
