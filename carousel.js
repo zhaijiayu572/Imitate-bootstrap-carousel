@@ -37,8 +37,52 @@ function Carousel(settings) {
     }else{
         this.navList = this.defaultSettings.navListStyle;
     }
+    //选择controlBtn的样式
+    if(this.defaultSettings.btnStyle!='default'){
+        this.leftBtn = this.defaultSettings.btnStyle[0];
+        this.rightBtn = this.defaultSettings.btnStyle[1];
+    }
+    //轮播的样式
+    switch (this.defaultSettings.changeEffect){
+        case 'fade':
+            this.content.addClass('fade');
+    }
+    var that = this;
+    this.fade = function (idx) {
+        that.content.find('img').eq(idx).fadeIn(600).siblings().hide();
+        that.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
+    }
 }
+// Carousel.prototype.fade = function (idx) {
+//     // console.log(this.content);
+//     this.content.find('img').eq(idx).fadeIn(600).siblings().hide();
+//     this.navList.find('li').eq(idx).addClass('selected').siblings().removeClass('selected');
+// };
+Carousel.prototype.set = function (changeFuction) {
+    var idx = 0;
+    var length = this.defaultSettings.imgSrc.length;
+    this.navList.find('li').on('click',function () {
+        idx = $(this).index();
+        changeFuction(idx);
+    });
+    this.leftBtn.on('click',function () {
+        idx--;
+        if(idx<0){
+            idx = length-1;
+        }
+        changeFuction(idx);
+    });
+    this.rightBtn.on('click',function () {
+        idx++;
+        if(idx>length-1){
+            idx = 0;
+        }
+        changeFuction(idx);
+    });
+
+};
 Carousel.prototype.create = function () {
+    this.set(this.fade);
     this.content.appendTo(this.container);
     this.navList.appendTo(this.container);
     this.title.appendTo(this.container);
