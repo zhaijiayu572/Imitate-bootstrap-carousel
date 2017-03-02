@@ -78,13 +78,12 @@ function Carousel(settings) {
             length = this.defaultSettings.imgSrc.length;
             this.container.css('background','#ccc');
             this.content.addClass('stack');
-            this.content.find('img').css({
+            this.content.find('img').css({         //设置最开始的样式
                     'marginLeft':-this.container.width()*0.5*0.5,
                     'marginTop':-this.container.height()*0.5*0.5
             }).eq(0).addClass('main').removeClass('selected').css('transform','translateZ('+this.container.width()*0.1+'px)')
                 .end().eq(length-1).addClass('left').css('transform','translateX('+(-this.container.width()*0.5*0.5)+'px) rotateY(30deg)')
                 .end(0).eq(1).addClass('right').css('transform','translateX('+(this.container.width()*0.5*0.5)+'px) rotateY(-30deg)');
-            // css('transform','translateX('+(-this.container.width()*0.5*0.5)+'px) rotateY(30deg)')
 
     }
     var that = this;
@@ -111,7 +110,7 @@ function Carousel(settings) {
     //设置图片样式为stack
     this.stack = function (idx) {
         var left = idx - 1;
-        if(left<0){
+        if(left<0){                 //计算出左右两边是那张图片
             left = length-1;
         }
         var right = idx +1;
@@ -119,6 +118,7 @@ function Carousel(settings) {
             right = 0;
         }
         console.log(idx,left,right);
+        //初始显示的样式
         that.content.find('img').removeClass().eq(idx).addClass('main').css('transform','translateZ('+that.container.width()*0.1+'px)')
             .end().eq(left).addClass('left').css('transform','translateX('+(-that.container.width()*0.5*0.5)+'px) rotateY(30deg)')
             .end().eq(right).addClass('right').css('transform','translateX('+(that.container.width()*0.5*0.5)+'px) rotateY(-30deg)');
