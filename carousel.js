@@ -72,7 +72,20 @@ function Carousel(settings) {
                     'marginTop':height*0.4/2,
                     'transform':'rotateY('+(angle*index)+'deg) translateZ('+(distance+10)+'px)'
                 });
-            })
+            });
+            break;
+        case 'stack':
+            length = this.defaultSettings.imgSrc.length;
+            this.container.css('background','#ccc');
+            this.content.addClass('stack');
+            this.content.find('img').css({
+                    'marginLeft':-this.container.width()*0.5*0.5,
+                    'marginTop':-this.container.height()*0.5*0.5
+            }).eq(0).addClass('main').removeClass('selected').css('transform','translateZ('+this.container.width()*0.1+'px)')
+                .end().eq(length-1).addClass('left').css('transform','translateX('+(-this.container.width()*0.5*0.5)+'px) rotateY(30deg)')
+                .end(0).eq(1).addClass('right').css('transform','translateX('+(this.container.width()*0.5*0.5)+'px) rotateY(-30deg)');
+            // css('transform','translateX('+(-this.container.width()*0.5*0.5)+'px) rotateY(30deg)')
+
     }
     var that = this;
     //设置改变图片的样式为fade
@@ -94,6 +107,22 @@ function Carousel(settings) {
         });
         var whichLi = idx%length;
         that.navList.find('li').eq(whichLi).addClass('selected').siblings().removeClass('selected');
+    };
+    //设置图片样式为stack
+    this.stack = function (idx) {
+        var left = idx - 1;
+        if(left<0){
+            left = length-1;
+        }
+        var right = idx +1;
+        if(right>length-1){
+            right = 0;
+        }
+        console.log(idx,left,right);
+        that.content.find('img').removeClass().eq(idx).addClass('main').css('transform','translateZ('+that.container.width()*0.1+'px)')
+            .end().eq(left).addClass('left').css('transform','translateX('+(-that.container.width()*0.5*0.5)+'px) rotateY(30deg)')
+            .end().eq(right).addClass('right').css('transform','translateX('+(that.container.width()*0.5*0.5)+'px) rotateY(-30deg)');
+        that.navList.find('li').eq(idx).addClass('selected').siblings().removeClass();
     }
 }
 // Carousel.prototype.fade = function (idx) {
@@ -180,6 +209,7 @@ Carousel.prototype.setCarousel = function (carouselFunction) {   //carousel的en
 };
 //创建出轮播图
 Carousel.prototype.create = function () {
+    //给轮播图绑定事件
     switch (this.defaultSettings.changeEffect){
         case 'fade':
             this.set(this.fade);
@@ -197,6 +227,9 @@ Carousel.prototype.create = function () {
             }else if(this.defaultSettings.carouselStyle == 'back'){
                 this.set(this.carousel);
             }
+            break;
+        case 'stack':
+            this.set(this.stack);
     }
     this.content.appendTo(this.container);
     this.navList.appendTo(this.container);
