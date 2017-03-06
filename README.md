@@ -14,3 +14,4 @@ container:$(body) 将轮播图的父容器，请传入一个jQ对象，默认为
 title：'' 轮播图的标题，默认为空，如果需要请传入一个string类型<br>
 slideStyle:back  轮播图的slide样式的类型有endless和back两种<br>
 carouselStyle:back 轮播图的carousel样式的类型有endless和back两种
+注意：请在标准内核的浏览器下使用
